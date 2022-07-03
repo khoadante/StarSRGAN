@@ -6,7 +6,7 @@ import torch
 from torch.backends import cudnn
 
 image_size = 256
-batch_size = 16
+batch_size = 8
 
 # Current configuration parameter method
 mode = "train_starsrnet"
