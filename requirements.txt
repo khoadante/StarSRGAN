@@ -1,0 +1,11 @@
+opencv-python
+numpy
+tqdm
+torch
+torchvision
+tensorboard
+scipy
+natsort
+# torchinfo
+# ipykernel
+# ipywidgets
