@@ -6,7 +6,7 @@ import torch
 from torch.backends import cudnn
 
 image_size = 256
-batch_size = 8
+batch_size = 12
 
 # Current configuration parameter method
 mode = "train_starsrnet"
@@ -87,7 +87,7 @@ if mode == "train_starsrnet":
     resume = ""
 
     # Total num epochs
-    epochs = 20
+    epochs = 10
 
     # Optimizer parameter
     model_lr = 2e-4
@@ -114,7 +114,7 @@ if mode == "train_starsrgan":
     resume_g = ""
 
     # Total num epochs
-    epochs = 10
+    epochs = 5
 
     # Feature extraction layer parameter configuration
     feature_model_extractor_nodes = [
