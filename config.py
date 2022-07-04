@@ -6,12 +6,12 @@ import torch
 from torch.backends import cudnn
 
 image_size = 256
-batch_size = 12
+batch_size = 8
 
 # Current configuration parameter method
-mode = "train_starsrnet"
+mode = "train_starsrgan"
 # Experiment name, easy to save weights and log files
-exp_name = "StarSR_baseline"
+exp_name = "StarSRGAN_baseline"
 
 degradation_model_parameters_dict = {
     "sinc_kernel_size": 21,
@@ -109,7 +109,7 @@ if mode == "train_starsrgan":
     test_hr_image_dir = f"./datasets/Set5/GTmod12"
 
     # Incremental training and migration training
-    resume = "./results/StarSR_baseline/g_last.pth.tar"
+    resume = "./results/StarSRNet_baseline/g_last.pth.tar"
     resume_d = ""
     resume_g = ""
 
@@ -155,4 +155,4 @@ if mode == "test":
     sr_dir = f"./results/test/{exp_name}"
     hr_dir = f"./datasets/Set14/GTmod12"
 
-    model_path = "./results/StarSR_baseline/g_best.pth.tar"
+    model_path = "./models/g_best.pth.tar"
