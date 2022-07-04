@@ -84,10 +84,10 @@ if mode == "train_starsrnet":
     test_hr_image_dir = f"./datasets/Set5/GTmod12"
 
     # Incremental training and migration training
-    resume = "./samples/StarSRNet_baseline/g_epoch_10.pth.tar"
+    resume = ""
 
     # Total num epochs
-    epochs = 10
+    epochs = 50
 
     # Optimizer parameter
     model_lr = 2e-4
@@ -110,11 +110,11 @@ if mode == "train_starsrgan":
 
     # Incremental training and migration training
     resume = "./results/StarSRNet_baseline/g_last.pth.tar"
-    resume_d = "./samples/StarSRGAN_baseline/d_epoch_4.pth.tar"
-    resume_g = "./samples/StarSRGAN_baseline/g_epoch_4.pth.tar"
+    resume_d = ""
+    resume_g = ""
 
     # Total num epochs
-    epochs = 5
+    epochs = 25
 
     # Feature extraction layer parameter configuration
     feature_model_extractor_nodes = [

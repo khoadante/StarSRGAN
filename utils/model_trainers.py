@@ -23,7 +23,7 @@ def train_pegasusnet(
     ema_model: nn.Module,
     train_prefetcher: CUDAPrefetcher,
     pixel_criterion: nn.MSELoss,
-    optimizer: optim.Adam,
+    optimizer: optim.AdamW,
     epoch: int,
     scaler: amp.GradScaler,
     writer: SummaryWriter,
@@ -35,7 +35,7 @@ def train_pegasusnet(
         ema_model (nn.Module): Exponential Moving Average Model
         train_prefetcher (CUDAPrefetcher): training dataset iterator
         pixel_criterion (nn.L1Loss): Calculate the pixel difference between real and fake samples
-        optimizer (optim.Adam): optimizer for optimizing generator models in generative networks
+        optimizer (optim.AdamW): optimizer for optimizing generator models in generative networks
         epoch (int): number of training epochs during training the generative network
         scaler (amp.GradScaler): Mixed precision training function
         writer (SummaryWrite): log file management function
@@ -303,8 +303,8 @@ def train_pegasusgan(
     pixel_criterion: nn.L1Loss,
     content_criterion: ContentLoss,
     adversarial_criterion: BCEWithLogitsLoss,
-    d_optimizer: optim.Adam,
-    g_optimizer: optim.Adam,
+    d_optimizer: optim.AdamW,
+    g_optimizer: optim.AdamW,
     epoch: int,
     scaler: amp.GradScaler,
     writer: SummaryWriter,
@@ -319,8 +319,8 @@ def train_pegasusgan(
         pixel_criterion (nn.L1Loss): Calculate the pixel difference between real and fake samples
         content_criterion (ContentLoss): Calculate the feature difference between real samples and fake samples by the feature extraction model
         adversarial_criterion (nn.BCEWithLogitsLoss): Calculate the semantic difference between real samples and fake samples by the discriminator model
-        d_optimizer (optim.Adam): an optimizer for optimizing discriminator models in adversarial networks
-        g_optimizer (optim.Adam): an optimizer for optimizing generator models in adversarial networks
+        d_optimizer (optim.AdamW): an optimizer for optimizing discriminator models in adversarial networks
+        g_optimizer (optim.AdamW): an optimizer for optimizing generator models in adversarial networks
         epoch (int): number of training epochs during training the adversarial network
         scaler (amp.GradScaler): Mixed precision training function
         writer (SummaryWrite): log file management function
