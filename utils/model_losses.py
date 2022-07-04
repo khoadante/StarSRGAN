@@ -6,14 +6,14 @@ from networks.losses import ContentLoss
 import config
 
 
-def define_pegasusnet_loss() -> nn.L1Loss:
+def define_starsrnet_loss() -> nn.L1Loss:
     pixel_criterion = nn.L1Loss()
     pixel_criterion = pixel_criterion.to(device=config.device)
 
     return pixel_criterion
 
 
-def define_pegasusgan_loss() -> Union[nn.L1Loss, ContentLoss, nn.BCEWithLogitsLoss]:
+def define_starsrgan_loss() -> Union[nn.L1Loss, ContentLoss, nn.BCEWithLogitsLoss]:
     pixel_criterion = nn.L1Loss()
     content_criterion = ContentLoss(
         config.feature_model_extractor_nodes,

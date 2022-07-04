@@ -6,13 +6,13 @@ from torch import optim
 import config
 
 
-def define_pegasusnet_optimizer(model) -> optim.AdamW:
+def define_starsrnet_optimizer(model) -> optim.AdamW:
     optimizer = optim.AdamW(model.parameters(), config.model_lr, config.model_betas)
 
     return optimizer
 
 
-def define_pegasusgan_optimizer(
+def define_starsrgan_optimizer(
     discriminator: nn.Module, generator: nn.Module
 ) -> List[optim.AdamW]:
     d_optimizer = optim.AdamW(

@@ -87,7 +87,7 @@ if mode == "train_starsrnet":
     resume = ""
 
     # Total num epochs
-    epochs = 50
+    epochs = 40
 
     # Optimizer parameter
     model_lr = 2e-4
@@ -114,7 +114,7 @@ if mode == "train_starsrgan":
     resume_g = ""
 
     # Total num epochs
-    epochs = 25
+    epochs = 20
 
     # Feature extraction layer parameter configuration
     feature_model_extractor_nodes = [

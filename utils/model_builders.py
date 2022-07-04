@@ -6,7 +6,7 @@ from networks.models import EMA, Generator, Discriminator
 import config
 
 
-def build_pegasusnet_model() -> List[nn.Module]:
+def build_starsrnet_model() -> List[nn.Module]:
     model = Generator(config.in_channels, config.out_channels, config.upscale_factor)
     model = model.to(device=config.device)
 
@@ -18,7 +18,7 @@ def build_pegasusnet_model() -> List[nn.Module]:
     return model, ema_model
 
 
-def build_pegasusgan_model() -> List[nn.Module]:
+def build_starsrgan_model() -> List[nn.Module]:
     discriminator = Discriminator()
     generator = Generator(
         config.in_channels, config.out_channels, config.upscale_factor

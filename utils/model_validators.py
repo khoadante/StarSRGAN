@@ -4,19 +4,17 @@ from typing import Any
 import torch
 from torch import nn
 from torch.cuda import amp
-from torch.utils.tensorboard import SummaryWriter
 
 from classes.prefetchers import CUDAPrefetcher
 from utils.summary_meters import AverageMeter, ProgressMeter
 import config
 
 
-def validate_pegasusnet(
+def validate_starsrnet(
     model: nn.Module,
     ema_model: nn.Module,
     data_prefetcher: CUDAPrefetcher,
     epoch: int,
-    writer: SummaryWriter,
     niqe_model: Any,
     mode: str,
 ) -> float:
@@ -87,21 +85,15 @@ def validate_pegasusnet(
 
     # Print average PSNR metrics
     progress.display_summary()
-
-    if mode == "Valid" or mode == "Test":
-        writer.add_scalar(f"{mode}/NIQE", niqe_metrics.avg, epoch + 1)
-    else:
-        raise ValueError("Unsupported mode, please use `Valid` or `Test`.")
 
     return niqe_metrics.avg
 
 
-def validate_pegasusgan(
+def validate_starsrgan(
     model: nn.Module,
     ema_model: nn.Module,
     data_prefetcher: CUDAPrefetcher,
     epoch: int,
-    writer: SummaryWriter,
     niqe_model: Any,
     mode: str,
 ) -> float:
@@ -172,10 +164,5 @@ def validate_pegasusgan(
 
     # Print average PSNR metrics
     progress.display_summary()
-
-    if mode == "Valid" or mode == "Test":
-        writer.add_scalar(f"{mode}/NIQE", niqe_metrics.avg, epoch + 1)
-    else:
-        raise ValueError("Unsupported mode, please use `Valid` or `Test`.")
 
     return niqe_metrics.avg

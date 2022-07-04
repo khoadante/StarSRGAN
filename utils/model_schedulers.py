@@ -6,7 +6,7 @@ from torch.optim import lr_scheduler
 import config
 
 
-def define_pegasusnet_scheduler(optimizer) -> lr_scheduler.StepLR:
+def define_starsrnet_scheduler(optimizer) -> lr_scheduler.StepLR:
     scheduler = lr_scheduler.StepLR(
         optimizer, config.lr_scheduler_step_size, config.lr_scheduler_gamma
     )
@@ -14,7 +14,7 @@ def define_pegasusnet_scheduler(optimizer) -> lr_scheduler.StepLR:
     return scheduler
 
 
-def define_pegasusgan_scheduler(
+def define_starsrgan_scheduler(
     d_optimizer: optim.AdamW, g_optimizer: optim.AdamW
 ) -> List[lr_scheduler.MultiStepLR]:
     d_scheduler = lr_scheduler.MultiStepLR(

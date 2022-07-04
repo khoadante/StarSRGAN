@@ -9,7 +9,6 @@ from torch import optim
 from torch.cuda import amp
 from torch.nn import functional as F
 from torch.nn import BCEWithLogitsLoss
-from torch.utils.tensorboard import SummaryWriter
 
 import utils.image_processing as imgproc
 from networks.losses import ContentLoss
@@ -18,7 +17,7 @@ from utils.summary_meters import AverageMeter, ProgressMeter
 import config
 
 
-def train_pegasusnet(
+def train_starsrnet(
     model: nn.Module,
     ema_model: nn.Module,
     train_prefetcher: CUDAPrefetcher,
@@ -26,7 +25,6 @@ def train_pegasusnet(
     optimizer: optim.AdamW,
     epoch: int,
     scaler: amp.GradScaler,
-    writer: SummaryWriter,
 ) -> None:
     """Training main program
 
@@ -282,10 +280,6 @@ def train_pegasusnet(
 
         # Record training log information
         if batch_index % config.print_frequency == 0:
-            # Writer Loss to file
-            writer.add_scalar(
-                "Train/Loss", loss.item(), batch_index + epoch * batches + 1
-            )
             progress.display(batch_index)
 
         # Preload the next batch of data
@@ -295,7 +289,7 @@ def train_pegasusnet(
         batch_index += 1
 
 
-def train_pegasusgan(
+def train_starsrgan(
     discriminator: nn.Module,
     generator: nn.Module,
     ema_model: nn.Module,
@@ -307,7 +301,6 @@ def train_pegasusgan(
     g_optimizer: optim.AdamW,
     epoch: int,
     scaler: amp.GradScaler,
-    writer: SummaryWriter,
 ) -> None:
     """Training main program
 
@@ -651,14 +644,6 @@ def train_pegasusgan(
 
         # Write the data during training to the training log file
         if batch_index % config.print_frequency == 0:
-            iters = batch_index + epoch * batches + 1
-            writer.add_scalar("Train/D_Loss", d_loss.item(), iters)
-            writer.add_scalar("Train/G_Loss", g_loss.item(), iters)
-            writer.add_scalar("Train/Pixel_Loss", pixel_loss.item(), iters)
-            writer.add_scalar("Train/Content_Loss", content_loss.item(), iters)
-            writer.add_scalar("Train/Adversarial_Loss", adversarial_loss.item(), iters)
-            writer.add_scalar("Train/D(HR)_Probability", d_hr_probability.item(), iters)
-            writer.add_scalar("Train/D(SR)_Probability", d_sr_probability.item(), iters)
             progress.display(batch_index)
 
         # Preload the next batch of data

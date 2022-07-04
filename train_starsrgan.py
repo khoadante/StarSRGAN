@@ -3,16 +3,15 @@ import shutil
 
 import torch
 from torch.cuda import amp
-from torch.utils.tensorboard import SummaryWriter
-from utils.model_validators import validate_pegasusgan
+from utils.model_validators import validate_starsrgan
 
 from utils.quality_assessment import NIQE
 from utils.dataset_loaders import load_datasets
-from utils.model_trainers import train_pegasusgan
-from utils.model_losses import define_pegasusgan_loss
-from utils.model_builders import build_pegasusgan_model
-from utils.model_optimizers import define_pegasusgan_optimizer
-from utils.model_schedulers import define_pegasusgan_scheduler
+from utils.model_trainers import train_starsrgan
+from utils.model_losses import define_starsrgan_loss
+from utils.model_builders import build_starsrgan_model
+from utils.model_optimizers import define_starsrgan_optimizer
+from utils.model_schedulers import define_starsrgan_scheduler
 import config
 
 
@@ -26,16 +25,16 @@ def main():
     train_prefetcher, valid_prefetcher, test_prefetcher = load_datasets()
     print("Load dataset successfully.")
 
-    discriminator, generator, ema_model = build_pegasusgan_model()
+    discriminator, generator, ema_model = build_starsrgan_model()
     print("Build all model successfully.")
 
-    pixel_criterion, content_criterion, adversarial_criterion = define_pegasusgan_loss()
+    pixel_criterion, content_criterion, adversarial_criterion = define_starsrgan_loss()
     print("Define all loss functions successfully.")
 
-    d_optimizer, g_optimizer = define_pegasusgan_optimizer(discriminator, generator)
+    d_optimizer, g_optimizer = define_starsrgan_optimizer(discriminator, generator)
     print("Define all optimizer functions successfully.")
 
-    d_scheduler, g_scheduler = define_pegasusgan_scheduler(d_optimizer, g_optimizer)
+    d_scheduler, g_scheduler = define_starsrgan_scheduler(d_optimizer, g_optimizer)
     print("Define all optimizer scheduler functions successfully.")
 
     if config.resume:
@@ -115,9 +114,6 @@ def main():
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
 
-    # Create training process log file
-    writer = SummaryWriter(os.path.join("samples", "logs", config.exp_name))
-
     # Initialize the gradient scaler.
     scaler = amp.GradScaler()
 
@@ -128,7 +124,7 @@ def main():
     niqe_model = niqe_model.to(device=config.device)
 
     for epoch in range(start_epoch, config.epochs):
-        train_pegasusgan(
+        train_starsrgan(
             discriminator,
             generator,
             ema_model,
@@ -140,13 +136,12 @@ def main():
             g_optimizer,
             epoch,
             scaler,
-            writer,
         )
-        _ = validate_pegasusgan(
-            generator, ema_model, valid_prefetcher, epoch, writer, niqe_model, "Valid"
+        _ = validate_starsrgan(
+            generator, ema_model, valid_prefetcher, epoch, niqe_model, "Valid"
         )
-        niqe = validate_pegasusgan(
-            generator, ema_model, test_prefetcher, epoch, writer, niqe_model, "Test"
+        niqe = validate_starsrgan(
+            generator, ema_model, test_prefetcher, epoch, niqe_model, "Test"
         )
         print("\n")
 

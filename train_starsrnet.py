@@ -3,16 +3,15 @@ import shutil
 
 import torch
 from torch.cuda import amp
-from torch.utils.tensorboard import SummaryWriter
-from utils.model_validators import validate_pegasusnet
+from utils.model_validators import validate_starsrnet
 
 from utils.quality_assessment import NIQE
 from utils.dataset_loaders import load_datasets
-from utils.model_trainers import train_pegasusnet
-from utils.model_losses import define_pegasusnet_loss
-from utils.model_builders import build_pegasusnet_model
-from utils.model_optimizers import define_pegasusnet_optimizer
-from utils.model_schedulers import define_pegasusnet_scheduler
+from utils.model_trainers import train_starsrnet
+from utils.model_losses import define_starsrnet_loss
+from utils.model_builders import build_starsrnet_model
+from utils.model_optimizers import define_starsrnet_optimizer
+from utils.model_schedulers import define_starsrnet_scheduler
 import config
 
 
@@ -26,16 +25,16 @@ def main():
     train_prefetcher, valid_prefetcher, test_prefetcher = load_datasets()
     print("Load all datasets successfully.")
 
-    model, ema_model = build_pegasusnet_model()
+    model, ema_model = build_starsrnet_model()
     print("Build all model successfully.")
 
-    pixel_criterion = define_pegasusnet_loss()
+    pixel_criterion = define_starsrnet_loss()
     print("Define all loss functions successfully.")
 
-    optimizer = define_pegasusnet_optimizer(model)
+    optimizer = define_starsrnet_optimizer(model)
     print("Define all optimizer functions successfully.")
 
-    scheduler = define_pegasusnet_scheduler(optimizer)
+    scheduler = define_starsrnet_scheduler(optimizer)
     print("Define all optimizer scheduler successfully.")
 
     print("Check whether the pretrained model is restored...")
@@ -94,7 +93,7 @@ def main():
     niqe_model = niqe_model.to(device=config.device)
 
     for epoch in range(start_epoch, config.epochs):
-        train_pegasusnet(
+        train_starsrnet(
             model,
             ema_model,
             train_prefetcher,
@@ -104,10 +103,10 @@ def main():
             scaler,
             writer,
         )
-        _ = validate_pegasusnet(
+        _ = validate_starsrnet(
             model, ema_model, valid_prefetcher, epoch, writer, niqe_model, "Valid"
         )
-        niqe = validate_pegasusnet(
+        niqe = validate_starsrnet(
             model, ema_model, test_prefetcher, epoch, writer, niqe_model, "Test"
         )
         print("\n")
