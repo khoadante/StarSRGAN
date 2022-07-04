@@ -1,6 +1,6 @@
 # Project stuff
 results/test
-samples
+# samples
 datasets/DIV2K
 
 # Byte-compiled / optimized / DLL files

@@ -110,8 +110,8 @@ if mode == "train_starsrgan":
 
     # Incremental training and migration training
     resume = "./results/StarSRNet_baseline/g_last.pth.tar"
-    resume_d = ""
-    resume_g = ""
+    resume_d = "./samples/StarSRGAN_baseline/d_epoch_4.pth.tar"
+    resume_g = "./samples/StarSRGAN_baseline/g_epoch_4.pth.tar"
 
     # Total num epochs
     epochs = 5
