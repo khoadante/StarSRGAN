@@ -9,7 +9,7 @@ image_size = 256
 batch_size = 8
 
 # Current configuration parameter method
-mode = "train_starsrgan"
+mode = "train_starsrnet"
 # Experiment name, easy to save weights and log files
 exp_name = "StarSRGAN_baseline"
 
@@ -84,7 +84,7 @@ if mode == "train_starsrnet":
     test_hr_image_dir = f"./datasets/Set5/GTmod12"
 
     # Incremental training and migration training
-    resume = ""
+    resume = "./samples/StarSRNet_baseline/g_epoch_10.pth.tar"
 
     # Total num epochs
     epochs = 10
