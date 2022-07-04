@@ -11,7 +11,7 @@ batch_size = 8
 # Current configuration parameter method
 mode = "train_starsrnet"
 # Experiment name, easy to save weights and log files
-exp_name = "StarSRGAN_baseline"
+exp_name = "StarSRNet_baseline"
 
 degradation_model_parameters_dict = {
     "sinc_kernel_size": 21,
