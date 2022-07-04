@@ -80,9 +80,6 @@ def main():
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
 
-    # Create training process log file
-    writer = SummaryWriter(os.path.join("samples", "logs", config.exp_name))
-
     # Initialize the gradient scaler
     scaler = amp.GradScaler()
 
@@ -101,13 +98,12 @@ def main():
             optimizer,
             epoch,
             scaler,
-            writer,
         )
         _ = validate_starsrnet(
-            model, ema_model, valid_prefetcher, epoch, writer, niqe_model, "Valid"
+            model, ema_model, valid_prefetcher, epoch, niqe_model, "Valid"
         )
         niqe = validate_starsrnet(
-            model, ema_model, test_prefetcher, epoch, writer, niqe_model, "Test"
+            model, ema_model, test_prefetcher, epoch, niqe_model, "Test"
         )
         print("\n")
 
