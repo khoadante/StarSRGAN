@@ -6,7 +6,7 @@ import torch
 from torch.backends import cudnn
 
 image_size = 256
-batch_size = 8
+batch_size = 32
 
 # Current configuration parameter method
 mode = "train_starsrnet"
@@ -62,9 +62,9 @@ degradation_process_parameters_dict = {
     "jpeg_range2": [30, 95],
 }
 # Random seed to maintain reproducible results
-random.seed(0)
-torch.manual_seed(0)
-np.random.seed(0)
+random.seed(1997)
+torch.manual_seed(1997)
+np.random.seed(1997)
 # Use GPU for training by default
 device = torch.device("cuda", 0)
 # Turning on when the image size does not change during training can speed up training
@@ -80,14 +80,14 @@ if mode == "train_starsrnet":
     # Dataset address
     train_image_dir = "./datasets/DIV2K/StarSRGAN/train"
     valid_image_dir = "./datasets/DIV2K/StarSRGAN/valid"
-    test_lr_image_dir = f"./datasets/Set5/LRbicx{upscale_factor}"
-    test_hr_image_dir = f"./datasets/Set5/GTmod12"
+    test_lr_image_dir = f"./datasets/Set14/LRbicx{upscale_factor}"
+    test_hr_image_dir = f"./datasets/Set14/GTmod12"
 
     # Incremental training and migration training
     resume = ""
 
     # Total num epochs
-    epochs = 40
+    epochs = 50
 
     # Optimizer parameter
     model_lr = 2e-4
@@ -105,8 +105,8 @@ if mode == "train_starsrgan":
     # Dataset address
     train_image_dir = "./datasets/DIV2K/StarSRGAN/train"
     valid_image_dir = "./datasets/DIV2K/StarSRGAN/valid"
-    test_lr_image_dir = f"./datasets/Set5/LRbicx{upscale_factor}"
-    test_hr_image_dir = f"./datasets/Set5/GTmod12"
+    test_lr_image_dir = f"./datasets/Set14/LRbicx{upscale_factor}"
+    test_hr_image_dir = f"./datasets/Set14/GTmod12"
 
     # Incremental training and migration training
     resume = "./results/StarSRNet_baseline/g_last.pth.tar"
@@ -114,7 +114,7 @@ if mode == "train_starsrgan":
     resume_g = ""
 
     # Total num epochs
-    epochs = 20
+    epochs = 25
 
     # Feature extraction layer parameter configuration
     feature_model_extractor_nodes = [
