@@ -87,7 +87,7 @@ if mode == "train_starsrnet":
     resume = ""
 
     # Total num epochs
-    epochs = 50
+    epochs = 100
 
     # Optimizer parameter
     model_lr = 2e-4
@@ -99,7 +99,7 @@ if mode == "train_starsrnet":
     lr_scheduler_gamma = 0.5
 
     # How many iterations to print the training result
-    print_frequency = 1
+    print_frequency = 10
 
 if mode == "train_starsrgan":
     # Dataset address
@@ -114,7 +114,7 @@ if mode == "train_starsrgan":
     resume_g = ""
 
     # Total num epochs
-    epochs = 25
+    epochs = 50
 
     # Feature extraction layer parameter configuration
     feature_model_extractor_nodes = [
@@ -147,7 +147,7 @@ if mode == "train_starsrgan":
     lr_scheduler_gamma = 0.5
 
     # How many iterations to print the training result
-    print_frequency = 1
+    print_frequency = 10
 
 if mode == "test":
     # Test data address
