@@ -6,12 +6,12 @@ import torch
 from torch.backends import cudnn
 
 image_size = 256
-batch_size = 32
+batch_size = 8
 
 # Current configuration parameter method
-mode = "train_starsrnet"
+mode = "train_starsrgan"
 # Experiment name, easy to save weights and log files
-exp_name = "StarSRNet_baseline"
+exp_name = "StarSRGAN_baseline"
 
 degradation_model_parameters_dict = {
     "sinc_kernel_size": 21,
@@ -114,7 +114,7 @@ if mode == "train_starsrgan":
     resume_g = ""
 
     # Total num epochs
-    epochs = 50
+    epochs = 10
 
     # Feature extraction layer parameter configuration
     feature_model_extractor_nodes = [
