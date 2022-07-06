@@ -2,6 +2,7 @@ import os
 
 import cv2
 import torch
+import numpy as np
 from natsort import natsorted
 
 import utils.image_processing as imgproc
@@ -30,6 +31,29 @@ def main() -> None:
 
     # Start the verification mode of the model.
     model.eval()
+
+    # INIT LOGGERS
+    starter, ender = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
+    repetitions = 1
+    timings=np.zeros((repetitions,1))
+    #GPU-WARM-UP
+    dummy_input = torch.randn(1, 3, 224, 224, dtype=torch.float).to(config.device)
+    for _ in range(10):
+        _ = model(dummy_input)
+    # MEASURE PERFORMANCE
+    with torch.no_grad():
+        for rep in range(repetitions):
+            starter.record()
+            _ = model(dummy_input)
+            ender.record()
+            # WAIT FOR GPU SYNC
+            torch.cuda.synchronize()
+            curr_time = starter.elapsed_time(ender)
+            timings[rep] = curr_time
+    mean_syn = np.sum(timings) / repetitions
+    std_syn = np.std(timings)
+    print(mean_syn)
+    print(std_syn)
 
     # Initialize the sharpness evaluation function
     niqe = NIQE(config.upscale_factor, config.niqe_model_path)

@@ -9,7 +9,7 @@ image_size = 256
 batch_size = 32
 
 # Current configuration parameter method
-mode = "train_starsrgan"
+mode = "test"
 # Experiment name, easy to save weights and log files
 exp_name = "StarSRGAN_baseline"
 
